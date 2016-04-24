@@ -77,7 +77,7 @@ int check_node(node_dll *head, int n)
 {
 	node_dll *temp;
 	temp = head;
-	while (temp != NULL)
+	while (temp)
 	{
 		if (temp->data != n)
 			return 0;
