@@ -44,13 +44,56 @@ Difficulty : Easy
 #include <stdio.h>
 #include <math.h>
 
-struct node{
+typedef struct node{
 	int data;
-	struct node *left;
-	struct node *right;
+	node *left;
+	node *right;
 };
+int left_side(node *, int,int);
+int right_side(node *, int,int);
 
+int left_side(node *curr, int N, int n)
+{
+	if (curr == NULL)
+		return N;
+	else
+	{
+		if (curr->data >= 0 && curr->data <= n)
+			N = N - (curr->data);
+		N = left_side(curr->left, N, n);
+		N = right_side(curr->right, N, n);
+	}
+	return N;
+}
+int right_side(node *curr, int N, int n)
+{
+	if (curr == NULL)
+		return N;
+	else
+	{
+		if (curr->data >= 0 && curr->data <= n)
+			N = N - (curr->data);
+		N = left_sidt(curr->left, N, n);
+		N = right_side(curr->right, N, n);
+	}
+	return N;
+}
 
-int get_missing_value(struct node *root,int n){
-    return -1;
+int get_missing_value(node *root, int n){
+
+	int N;
+	node *temp;
+	temp = root;
+	N = (n*(n + 1)) / 2;
+	if (root != NULL)
+	{
+		if (temp->data >= 0 && temp->data <= n)
+			N = N - temp->data;
+		//n--;
+	}
+	else
+		return -1;
+	N = left_side(temp->left, N, n);
+	N = right_side(temp->right, N, n);
+	return N;
 }
