@@ -60,17 +60,85 @@ Difficulty : Medium +
 #include <stdlib.h>
 #include <stdio.h>
 
-struct node_dll{
+typedef struct node_dll{
 	int data;
 	struct node_dll *next;
 	struct node_dll *prev;
 };
-struct node{
+typedef struct node{
 	int data;
 	struct node *left;
 	struct node *right;
 };
+int left_side(node *, node_dll *);
+int right_side(node *, node_dll *);
+int check_node(node_dll *,int);
+int check_node(node_dll *head, int n)
+{
+	node_dll *temp;
+	temp = head;
+	while (temp != NULL)
+	{
+		if (temp->data != n)
+			return 0;
+		if (temp->data == n && temp->data!=-1)
+			temp->data = -1;
+		temp = temp->next;
+	}
+	if (temp == NULL)
+		return 1;
+
+}
+int left_side(node *curr, node_dll *head)
+{
+	int n,n1, n2;
+	if (curr == NULL)
+		return -1;
+	else
+	{
+		n = check_node(head, curr->data);
+		if (n == 0)
+			return 0;
+		n1 = left_side(curr->left, head);
+		n2 = right_side(curr->right, head);
+		if (n1 == 1 && n2 == 1)
+			return 1;
+		else
+			return 0;
+	}
+}
+int right_side(node *curr, node_dll *head)
+{
+	int n,n1, n2;
+	if (curr == NULL)
+		return -1;
+	else
+	{
+		n = check_node(head, curr->data);
+		if (n == 0)
+			return 0;
+		n1 = left_side(curr->left, head);
+		n2 = right_side(curr->right, head);
+		if (n1 == 1 && n2 == 1)
+			return 1;
+		else
+			return 0;
+	}
+}
 
 int is_identical(struct node_dll *head, struct node *root){
-	return -1;
+	
+	int n,n1, n2;
+	if (root == NULL || head == NULL)
+		return -1;
+	n = check_node(head, root->data);
+	if (n == 0)
+		return 0;
+	n1=left_side(root->left, head);
+	n2=right_side(root->right, head);
+	if (n1 == 1 && n2 == 1)
+		return 1;
+	else
+		return 0;
+
 }
